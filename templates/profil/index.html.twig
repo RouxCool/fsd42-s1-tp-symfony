@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="/css/profil/index.css">
+    <h1>Profil</h1>
+    <p>Pseudo : {{ app.user.name }}</p>
+    <p>Email : {{ app.user.email }}</p>
+    <p>Création : {{ app.user.createdAt|date('d/m/Y H:i') }}</p>
+    {{ form(form) }}
+{% endblock %}

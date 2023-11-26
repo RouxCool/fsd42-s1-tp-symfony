@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>
+        <link rel="stylesheet" href="/css/login/index.css">
+        <h1>Connexion</h1>
+
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="POST">
+            <label for="username">Email</label>
+            <input type="text" id="username" name="_username" value="{{ username }}" class="form-control">
+            
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="_password" class="form-control">
+
+            <button type="submit">Connexion</button>
+        </form>
+    </div>
+{% endblock %}
