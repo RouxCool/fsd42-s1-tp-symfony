@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\EventRepository;
+use App\Repository\PublicationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventRepository::class)]
-class Event
+#[ORM\Entity(repositoryClass: PublicationRepository::class)]
+class Publication
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,33 +22,21 @@ class Event
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $address = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $city = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $postalCode = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $startAt = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'event', fetch: 'EAGER')]
+    #[ORM\ManyToOne(inversedBy: 'publication', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'event', fetch: 'EAGER')]
+    #[ORM\ManyToOne(inversedBy: 'publication', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comment;
 
     public function __construct()
@@ -82,54 +70,6 @@ class Event
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postalCode;
-    }
-
-    public function setPostalCode(string $postalCode): static
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    public function getStartAt(): ?\DateTimeImmutable
-    {
-        return $this->startAt;
-    }
-
-    public function setStartAt(\DateTimeImmutable $startAt): static
-    {
-        $this->startAt = $startAt;
 
         return $this;
     }
@@ -191,7 +131,7 @@ class Event
     {
         if (!$this->comment->contains($comment)) {
             $this->comment->add($comment);
-            $comment->setEvent($this);
+            $comment->setPublication($this);
         }
 
         return $this;
@@ -200,8 +140,8 @@ class Event
     public function removeComment(Comment $comment): static
     {
         if ($this->comment->removeElement($comment)) {
-            if ($comment->getEvent() === $this) {
-                $comment->setEvent(null);
+            if ($comment->getPublication() === $this) {
+                $comment->setPublication(null);
             }
         }
 

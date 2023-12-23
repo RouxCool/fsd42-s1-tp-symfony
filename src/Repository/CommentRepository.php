@@ -17,8 +17,8 @@ class CommentRepository extends ServiceEntityRepository
     public function findOne(int $id): array
     {
         return $this->createQueryBuilder('c')
-            ->where('c.event = :eventId')
-            ->setParameter('eventId', $id)
+            ->where('c.publication = :publicationId')
+            ->setParameter('publicationId', $id)
             ->orderBy('c.createdAt')
             ->getQuery()
             ->getResult();

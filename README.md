@@ -7,89 +7,56 @@ php bin/console doctrine:migrations:migrate
 php bin/console make:controller ExampleController
 php bin/console doctrine:fixtures:load
 
-# Evaluation
+# Mini-réseau social
 
-L'évaluation consiste à créer un projet avec toutes les différentes notions qui auront été vues durant la semaine. Ce projet sera rendu sous la forme d'un depôt git.
+## Objectif
 
-[Url avec les dépôts git](https://docs.google.com/spreadsheets/d/1FG3mYVUH5kBjLPXZZQVMIb7DD8_pxTwnOaADXVqViBk/edit#gid=0)
+Créer un mini-réseau social (publication, commentaire, like, invitation amis) avec Symfony.
 
-## Projet
+## Instructions
 
-Le projet à faire pour cette semaine sera un site de gestion d'événements, créés par les utilisateurs pour d'autres utilisateurs.
+### Inscription/Connexion (3 points) OK
 
-### Fonctionalités
+Mettre en place un système d'inscription/connexion sur le site. On se connecte à l'aide d'une adresse email.
+Chaque utilisateur aura un pseudo qui sera affiché. La date de la dernière connexion de l'utilisateur (idéalement en utilisant le système d'événement de Symfony).
 
-* Inscription
-* Connexion/Déconnexion
-* Créer un événement
-* Liste des événements
-* Modifier un événement (si on en est l'auteur)
-* Supprimer un événement (si on en est l'auteur)
-* Créer un commentaire sur la page de l'événement
-* Voir les informations de son compte (à part le mot de passe)
-* Modifier le mot de passe
-* S'inscrire/se désinscrire à un événement
+Dans une factory, créer plusieurs utilisateurs.
 
-### Données
+### Catégories (2 points) OK
 
-* User (email, name, password, createdAt, updatedAt)
-* Event (title, description, address, city, postalCode, startAt, createdAt, updatedAt, category, user)
-* Category (name)
+Les catégories sont rattachées aux publications (plusieurs catégories à une même publication). Dans une factory, créer quelques catégories. 
 
-### Pages
+### Publication (3 points) OK
 
-#### Accueil
+Un utilisateur connecté peut écrire des publications. Ces publications contiendront un titre, un contenu, une heure de création, une ou plusieurs catégories.
+Lorsque l'on va sur la page d'un utilisateur, on affiche toutes les publications de cet utilisateur avec un système de pagination (10 publications par page).
+L'utilisateur peut bien sûr modifier sa propre publication depuis la publication elle-même.
 
-Afficher les 5 derniers événements créés.
+Dans une factory, créer plusieurs publications.
 
-#### Inscription
+### Commentaires (2 points)
 
-Afficher un formulaire d'inscription avec l'email qui servira d'identifiant et un pseudo.
+Sur chaque publication, il y aura un espace commentaire. N'importe quel utilisateur connecté peut écrire un commentaire sur une publication. Les commentaires contiendront un contenu, l'utilisateur du site qui a écrit le commentaire et une date de création.
+Dans une factory, créer quelques commentaires.
 
-#### Connexion
+### Like (2.5 points)
 
-Afficher un formulaire de connexion qui permet à l'utilisateur de se connecter avec son email.
+Un utilisateur peut "liker" la publication d'un autre utilisateur. Il faut bien sûr être connecté pour pouvoir "liker" une publication. Si on clique de nouveau sur le bouton qui permet de "liker", ça retire le "like" de la publication.
 
-#### Liste des événements
+### Invitations (2.5 points)
 
-Afficher la liste de tous les événements avec un système de pagination. Chaque événement propose un lien qui envoie vers le détail de l'événement.
+Un utilisateur peut faire une demande d'ami à un autre utilisateur qui peut accepter cette demande.
+Les publications d'un utilisateur ne sont visibles que par ses amis.
 
-#### Détail de l'événement
+### Commentaire d'un commentaire (2.5 points)
 
-Lorsque l'on va sur cette page, on veut afficher toutes les informations de l'événement, un lien pour s'inscrire à l'événement, les commentaires.
+Faire en sorte qu'il soit possible de commenter à un commentaire (le commentaire du commentaire sera indenté par rapport à ce dernier).
 
-La liste des utilisateurs inscrits à l'événement est affichée.
+### Interface d'administration (2.5 points)
 
-Afficher le formulaire de création d'un commentaire.
+Mettre en place une interface d'administration avec *easyadmin* accessible uniquement aux *ROLE_ADMIN* et aux *ROLE_MODERATOR*.
+Le rôle modérateur peut gérer les publications et les commentaires mais il n'a pas accès aux utilisateurs. Le rôle admin peut tout faire et ajouter/modifier de nouveaux rôles aux utilisateurs.
 
-#### Profil de l'utilisateur
+## BONUS
 
-Permet de voir quelles sont les informations de l'utilisateur (email, pseudo) et la liste des événements créés par l'utilisateur.
-
-Sur le profil l'utilisateur a possibilité de modifier son mot de passe.
-
-#### Créer un événement
-
-Afficher un formulaire de création d'événement et gérer la soumission. Lorsque l'événement a été créé on est redirigé vers la page "Liste des événements".
-
-#### Modifier un événement
-
-Permet de modifier un événement créé par l'utilisateur (sinon renvoyer erreur 403).
-
-#### Supprimer un événement
-
-Permet de supprimer un événement créé par l'utilisateur (sinon renvoyer erreur 403).
-
-#### Inscription à un événement
-
-L'utilisateur peut s'inscrire à un événement en cliquant sur le lien "S'inscrire à un événement" présent sur la page d'un événement.
-
-[BONUS] Gérer différents cas : si l'utilisateur est inscrit à un événement au même moment, il ne peut pas s'inscrire à l'événement.
-
-#### [BONUS++] Liste des événements proches de la position de l'utilisateur
-
-Afficher la liste des événements proches de la position de l'utilisateur.
-
-### Validation des données
-
-Bien valider les données à chaque soumission de formulaire (champs obligatoires, taille de certains champs, l'email de l'utilisateur doit être unique, le mot de passe doit faire au-moins 8 caractères...).
+Des points bonus seront accordés en fonction de la propreté du code (lisibilité, phpdoc, découpage en service).

@@ -19,7 +19,7 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comment', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Event $event = null;
+    private ?Publication $publication = null;
 
     #[ORM\ManyToOne(inversedBy: 'comment', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
@@ -49,14 +49,14 @@ class Comment
         return $this;
     }
 
-    public function getEvent(): ?Event
+    public function getPublication(): ?Publication
     {
-        return $this->event;
+        return $this->publication;
     }
 
-    public function setEvent(?Event $event): static
+    public function setPublication(?Publication $publication): static
     {
-        $this->event = $event;
+        $this->publication = $publication;
 
         return $this;
     }

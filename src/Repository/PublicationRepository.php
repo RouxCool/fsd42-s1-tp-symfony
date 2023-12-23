@@ -2,16 +2,16 @@
 
 namespace App\Repository;
 
-use App\Entity\Event;
+use App\Entity\Publication;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
-class EventRepository extends ServiceEntityRepository
+class PublicationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Event::class);
+        parent::__construct($registry, Publication::class);
     }
     public function findLast(): array
     {

@@ -10,7 +10,7 @@ class CatFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $cat = ['Anniversaire', 'Noël'];
+        $cat = ['News', 'Général'];
         foreach ($cat as $categoryName) {
             $category = new Category();
             $category->setName($categoryName);

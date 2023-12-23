@@ -37,8 +37,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class, orphanRemoval: true)]
-    private Collection $event;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Publication::class, orphanRemoval: true)]
+    private Collection $publication;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comment;
@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->event = new ArrayCollection();
+        $this->publication = new ArrayCollection();
         $this->comment = new ArrayCollection();
     }
 
@@ -157,29 +157,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection<int, Publication>
      */
-    public function getEvent(): Collection
+    public function getPublication(): Collection
     {
-        return $this->event;
+        return $this->publication;
     }
 
-    public function addEvent(Event $event): static
+    public function addPublication(Publication $publication): static
     {
-        if (!$this->event->contains($event)) {
-            $this->event->add($event);
-            $event->setUser($this);
+        if (!$this->publication->contains($publication)) {
+            $this->publication->add($publication);
+            $publication->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): static
+    public function removePublication(Publication $publication): static
     {
-        if ($this->event->removeElement($event)) {
+        if ($this->publication->removeElement($publication)) {
             // set the owning side to null (unless already changed)
-            if ($event->getUser() === $this) {
-                $event->setUser(null);
+            if ($publication->getUser() === $this) {
+                $publication->setUser(null);
             }
         }
 

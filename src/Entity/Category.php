@@ -18,12 +18,12 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Event::class)]
-    private Collection $event;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Publication::class)]
+    private Collection $publication;
 
     public function __construct()
     {
-        $this->event = new ArrayCollection();
+        $this->publication = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,26 +43,26 @@ class Category
         return $this;
     }
 
-    public function getEvent(): Collection
+    public function getPublication(): Collection
     {
-        return $this->event;
+        return $this->publication;
     }
 
-    public function addEvent(Event $event): static
+    public function addPublication(Publication $publication): static
     {
-        if (!$this->event->contains($event)) {
-            $this->event->add($event);
-            $event->setCategory($this);
+        if (!$this->publication->contains($publication)) {
+            $this->publication->add($publication);
+            $publication->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): static
+    public function removePublication(Publication $publication): static
     {
-        if ($this->event->removeElement($event)) {
-            if ($event->getCategory() === $this) {
-                $event->setCategory(null);
+        if ($this->publication->removeElement($publication)) {
+            if ($publication->getCategory() === $this) {
+                $publication->setCategory(null);
             }
         }
 

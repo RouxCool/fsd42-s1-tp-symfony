@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="/css/publication/index.css">
+
+    <div class="title">
+        <div>
+            <h1>Publication {{ publicationDetail.title }} ({{ publicationDetail.id }})</h1>
+        </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user.name == publicationDetail.user.name %}
+                <a class="button" href="{{ path('app_publication_update', {'id': publicationDetail.id}) }}">Modifier</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="publication">
+        <h3><a href="{{ path('app_publication_infos', {'id': publicationDetail.id}) }}">{{ publicationDetail.title }}</a></h3>
+        <h6>
+            <p>Auteur : {{ publicationDetail.user.name }}</p>
+            <p>Création : {{ publicationDetail.createdAt|date('d/m/Y H:i') }}</p>
+            <p>Catégorie : {{ publicationDetail.category.name }}</p>
+            <small>{{ publicationDetail.created_at|date('d/m/Y H:i') }}</small>
+        </h6>
+        <p>{{ publicationDetail.description }}</p>
+    </div>
+
+    <h2>Commentaires</h2>
+
+    <div class="comment">
+        {% for comment in comments %}
+            <div>
+                <header>
+                    <h4>{{ comment.user.name }}</h4>
+                    <p>Création {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+                </header>
+                {{ comment.content }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

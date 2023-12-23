@@ -2,8 +2,18 @@
 
 {% block body %}
     <link rel="stylesheet" href="/css/publication/index.css">
-    <h1>Accueil</h1>
+    <div class="title">
+        <div>
+            <h1>Publication</h1>
+        </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div>
+                <a class="button" href="{{ path('app_publication_create') }}">Ajouter</a>
+            </div>
+        {% endif %}
+    </div>
 
+    {# Liste d'une publication #}
     {% for publication in publications %}
         <div class="publication">
             <h3><a href="{{ path('app_publication_infos', {'id': publication.id}) }}">{{ publication.title }}</a></h3>
